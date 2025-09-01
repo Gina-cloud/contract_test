@@ -1,0 +1,93 @@
+{
+  "version": "0.2",
+  "params": {
+    "late_interest_rate": 12,
+    "acceptance_days": 5,
+    "reacceptance_days": 3,
+    "no_hire_months": 12,
+    "service_term_max": 12,
+    "cost_threshold_percent": 10
+  },
+  "rules": [
+    {
+      "id": "PAY-001",
+      "title": "세금계산서 기준 현금 수취",
+      "severity": "required",
+      "detect": ["세금계산서"],
+      "must_include": ["현금"],
+      "suggestion": "[제안] 대금은 공급자의 세금계산서 발행에 따라 현금으로 지급한다."
+    },
+    {
+      "id": "PAY-002",
+      "title": "지연이자 연12%",
+      "severity": "required",
+      "detect": ["지연", "이자"],
+      "must_include_all": ["지연", "이자", "12%"],
+      "suggestion": "[보완 제안] 발주자의 지급 지연 시 지연일수에 대해 연 12%의 지연이자를 가산하여 지급한다."
+    },
+    {
+      "id": "ACC-001",
+      "title": "검수 5영업일/간주합격/재검수3영업일",
+      "severity": "required",
+      "detect": ["검수"],
+      "must_include_all": ["5영업일", "간주", "3영업일"],
+      "suggestion": "[보완 제안] 검수요청일로부터 5영업일 내 결과를 통지하며, 미통지 또는 사용개시는 합격 간주한다. 재검수는 3영업일 내 수행한다."
+    },
+    {
+      "id": "HR-001",
+      "title": "1년 채용금지(비유인)",
+      "severity": "required",
+      "detect": ["고용", "유인"],
+      "must_include_any": ["1년", "직접·간접 고용"],
+      "suggestion": "[제안] 계약 종료 후 1년간 본 계약 참여 인력의 직접·간접 고용을 금지한다."
+    },
+    {
+      "id": "DEL-001",
+      "title": "발주자 지연=납기연장+실비청구",
+      "severity": "required",
+      "detect": ["지연", "납기"],
+      "must_include_any": ["납기 연장", "추가 공수", "실비"],
+      "suggestion": "[제안] 발주자 사유로 착수가 지연되는 경우, 그 지연기간만큼 납기를 자동 연장하며, 지연으로 발생한 추가 공수/실비는 별도 청구한다."
+    },
+    {
+      "id": "SVC-001",
+      "title": "계약기간 최대 12개월",
+      "severity": "recommended",
+      "detect": ["계약기간", "개월"],
+      "must_include_any": ["12개월", "1년"],
+      "suggestion": "[보완 제안] 본 용역의 계약기간은 최대 12개월로 한다."
+    },
+    {
+      "id": "TAX-001",
+      "title": "원천징수 세율 및 공제 주체",
+      "severity": "recommended",
+      "detect": ["원천징수", "개인"],
+      "must_include_any": ["공제", "세율"],
+      "suggestion": "[보완 제안] 개인 사업자/프리랜서의 경우 보수 지급 시 관련 원천징수세를 법령에 따라 공제한다."
+    },
+    {
+      "id": "CHG-001",
+      "title": "변경관리 사전 서면합의",
+      "severity": "required",
+      "detect": ["추가", "변경"],
+      "must_include_any": ["변경관리", "사전 서면", "추가 비용"],
+      "suggestion": "[제안] 범위 변경 또는 추가 요구는 변경관리 절차에 따라 사전 서면합의 후 추가 비용을 산정·청구한다."
+    },
+    {
+      "id": "IP-001",
+      "title": "지식재산권 귀속 및 라이선스",
+      "severity": "required",
+      "detect": ["지식재산권", "귀속"],
+      "must_include_any": ["발주자", "선행기술", "라이선스"],
+      "suggestion": "[보완 제안] 대금 완전 지급 시 산출물의 지식재산권은 발주자에 귀속한다. 단, 공급자의 선행기술·공통모듈·노하우는 공급자에 귀속하며, 산출물 목적 범위 내 비독점적 사용권을 부여한다."
+    },
+    {
+      "id": "HR-002",
+      "title": "인력 진술보장 및 대체기준",
+      "severity": "recommended",
+      "detect": ["진술보장", "인력"],
+      "must_include_any": ["5영업일", "대체", "영업비밀"],
+      "suggestion": "[제안] 공급자는 투입 인력의 자격·기술수준을 보장하며, 부적합 인력은 통지 5영업일 이내 동일급 대체한다. 인력은 용역수행 중 겸업·영업비밀 위반을 하지 않는다."
+    }
+  ]
+}
